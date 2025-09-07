@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #log {
+      margin-top: 20px;
+      text-align: left;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Click Counter</h1>
+  <button id="increment-btn">Like</button>
+  <p id="count-display"></p>
+
+  <div id="log">
+    <h3>Log:</h3>
+  </div>
+</body>
+</html>
+<script>
+    let count=0;
+    let like=document.getElementById("increment-btn");
+    let disp=document.getElementById("count-display");
+    let log=document.getElementById("log");
+    disp.innerText=count;
+    like.onclick=function(){
+        disp.innerText=++count;
+        let msg=document.createElement("div");
+        msg.innerText="count is now "+count;
+        log.appendChild(msg);
+    }
+</script>

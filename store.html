@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <select id="citySelect" onchange="showStore()">
+  <option value="">Select City</option>
+  <option value="Mumbai">Mumbai</option>
+  <option value="Delhi">Delhi</option>
+</select>
+<div id="storeAddress" style="margin-top: 10px; font-weight: bold;"></div>
+
+<script>
+  // Array of objects instead of a single object
+  const stores = [
+    { city: "Mumbai", address: "123 Marine Drive, Mumbai" },
+    { city: "Delhi", address: "456 Connaught Place, Delhi" }
+  ];
+
+  function showStore() {
+    const city = document.getElementById("citySelect").value;
+    const store = stores.find(s => s.city === city);
+    document.getElementById("storeAddress").innerText = 
+      store ? store.address : "Please select a city.";
+  }
+</script>
+
+</body>
+</html>
+
+
+function showstore(){
+  const city=document.getElementById("citySelect").value;
+  const store=stores.find(s => s.city === city);
+  document.getElementById("storeAddress").innerText=store?store.address :"please select a city";
+}

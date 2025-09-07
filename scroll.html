@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="scrollContainer" style="width: 100%; overflow: hidden; position: relative; height: 30px;">
+  <p id="scrollText" style="white-space: nowrap; position: absolute; top: 0;">Scrolling Text Here</p>
+</div>
+
+<script>
+  const text = document.getElementById("scrollText");
+  let position = window.innerWidth;  // start from right edge
+
+  function scrollTextFunc() {
+    position--;
+    if (position < -text.offsetWidth) {
+      position = window.innerWidth; // reset when fully off-screen
+    }
+    text.style.left = position + 'px';
+  }
+
+  setInterval(scrollTextFunc, 10); // speed of scrolling
+</script>
+
+</body>
+</html>
+<!-- 
+const text=document.getElementById("scrollText");
+let position=window.innerWidth;
+function scrolltext(){
+  position--;
+  if(position < -text.offsetWidth)
+  {
+    position=window.innerWidth;
+  }
+  text.style.left=position+'px';
+}
+setInterval(scrolltext,10); -->

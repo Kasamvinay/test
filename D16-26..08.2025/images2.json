@@ -1,0 +1,5 @@
+[
+  { "id": 1, "name": "apple", "imageUrl": "images/1.jpeg" },
+  { "id": 2, "name": "banana", "imageUrl": "images/2.jpeg" },
+  { "id": 3, "name": "manago", "imageUrl": "images/3.jpeg" }
+]

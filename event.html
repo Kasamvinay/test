@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Event Handling Practice</title>
+</head>
+<body>
+  <button id="clickBtn">Click Me</button>
+  <button id="hoverBtn">Hover Over Me</button>
+  <div id="result" style="margin-top: 20px;"></div>
+
+  <script>
+    // Using addEventListener for click
+    document.getElementById("clickBtn").addEventListener("click", () => {
+      const newPara = document.createElement("p");
+      newPara.innerText = "You clicked the button!";
+      document.getElementById("result").appendChild(newPara);
+    });
+    document.getElementById("clickBtn").addEventListener("dblclick",()=>{
+        const newhead=document.createElement("h2");
+        newhead.innerHTML="heading 2";
+        document.getElementById("result").appendChild(newhead);
+    })
+
+    // Using inline event handler for hover (onmouseover)
+    document.getElementById("hoverBtn").onmouseover = function() {
+      const newPara = document.createElement("p");
+      newPara.innerText = "You hovered over the button!";
+      document.getElementById("result").appendChild(newPara);
+    };
+
+    // Using addEventListener with an external callback
+    function addCustomMessage() {
+      const newPara = document.createElement("p");
+      newPara.innerText = "This is triggered by a separate callback function!";
+      document.getElementById("result").appendChild(newPara);
+    }
+    document.getElementById("clickBtn").addEventListener("dblclick", addCustomMessage);
+  </script>
+</body>
+</html>

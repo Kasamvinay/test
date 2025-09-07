@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fetch Images from KMIT Website</title>
+  <style>
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      width: 200px;
+    }
+    img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <h2>Images from KMIT Website (via JSON)</h2>
+  <div id="imageContainer" class="gallery"></div>
+
+  <script>
+    async function loadImages() {
+      try {
+        const response = await fetch("image.json"); // fetch your JSON file
+        if (!response.ok) {
+          throw new Error("Failed to load JSON");
+        }
+        const data = await response.json();
+
+        const container = document.getElementById("imageContainer");
+
+        data.forEach(record => {
+          const card = document.createElement("div");
+          card.classList.add("card");
+
+          const img = document.createElement("img");
+          img.src = record.imageUrl; // uses absolute URL
+          img.alt = record.name;
+
+          const caption = document.createElement("p");
+          caption.textContent = record.name;
+
+          card.appendChild(img);
+          card.appendChild(caption);
+          container.appendChild(card);
+        });
+
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    loadImages();
+  </script>
+</body>
+</html>

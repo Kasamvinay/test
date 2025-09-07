@@ -1,0 +1,5 @@
+[
+  { "id": 1, "name": "KMIT Logo", "imageUrl": "https://www.kmit.in/assets/img/logo.png" },
+  { "id": 2, "name": "Campus", "imageUrl": "https://www.kmit.in/assets/img/campus1.jpg" },
+  { "id": 3, "name": "Another Image", "imageUrl": "https://www.kmit.in/assets/img/campus2.jpg" }
+]

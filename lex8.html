@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    .item {
+      display: inline-block;
+      margin: 20px;
+      text-align: center;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    img {
+      width: 150px;
+      height: 150px;
+    }
+    #cart {
+      margin-top: 30px;
+      border-collapse: collapse;
+      width: 90%;
+    }
+    #cart th, #cart td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    .cart-img {
+      width: 60px;
+      height: 60px;
+    }
+    #controls {
+      margin: 20px 0;
+    }
+    select {
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Product List</h2>
+
+<div id="controls">
+  <!-- Dropdown for filtering -->
+  <label>Filter: </label>
+  <select id="filter" onchange="renderProducts()">
+    <option value="all">All</option>
+    <option value="fruit">Fruits</option>
+    <option value="vegetable">Vegetables</option>
+  </select>
+
+  <!-- Dropdown for sorting -->
+  <label>Sort by: </label>
+  <select id="sort" onchange="renderProducts()">
+    <option value="name">Name</option>
+    <option value="cost">Cost</option>
+  </select>
+</div>
+
+<div id="product-list"></div>
+
+<h2>Cart</h2>
+<table id="cart">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>Cost (Each)</th>
+      <th>Total</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="cart-body"></tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3"><strong>Total Amount</strong></td>
+      <td colspan="2" id="total-cost">₹0</td>
+    </tr>
+  </tfoot>
+</table>
+
+<script>
+  // Products with categories added (fruit or vegetable)
+  const products = [
+    { name: "Apple", cost: 50, type: "fruit" },
+    { name: "Banana", cost: 20, type: "fruit" },
+    { name: "Mango", cost: 70, type: "fruit" },
+    { name: "Tomato", cost: 30, type: "vegetable" },
+    { name: "Carrot", cost: 25, type: "vegetable" },
+    { name: "Potato", cost: 15, type: "vegetable" }
+  ];
+
+  const imageMap = {
+    "Apple": "APPLE.jpeg",
+    "Banana": "banana.jpeg",
+    "Mango": "mango.jpeg",
+    "Tomato": "tomato.jpeg",
+    "Carrot": "carrot.jpeg",
+    "Potato": "potato.jpeg"
+  };
+
+  const cartItems = [];
+
+  // Render product list dynamically
+  function renderProducts() {
+    const filterValue = document.getElementById("filter").value;
+    const sortValue = document.getElementById("sort").value;
+
+    let filteredProducts = products.filter(p => 
+      filterValue === "all" ? true : p.type === filterValue
+    );
+
+    if (sortValue === "name") {
+      filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortValue === "cost") {
+      filteredProducts.sort((a, b) => a.cost - b.cost);
+    }
+
+    const productList = document.getElementById("product-list");
+    productList.innerHTML = ""; // clear before re-render
+
+    filteredProducts.forEach((product, index) => {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <img src="${imageMap[product.name]}" alt="${product.name}">
+        <p><strong>${product.name}</strong></p>
+        <p>Cost: ₹${product.cost}</p>
+        <button onclick="addToCart('${product.name}')">Add to Cart</button>
+      `;
+      productList.appendChild(div);
+    });
+  }
+
+  function addToCart(name) {
+    const product = products.find(p => p.name === name);
+    const existingItem = cartItems.find(item => item.name === product.name);
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cartItems.push({ name: product.name, cost: product.cost, quantity: 1 });
+    }
+    renderCart();
+  }
+
+  function removeFromCart(index) {
+    if (cartItems[index].quantity > 1) {
+      cartItems[index].quantity -= 1;
+    } else {
+      cartItems.splice(index, 1);
+    }
+    renderCart();
+  }
+
+  function renderCart() {
+    const cartBody = document.getElementById("cart-body");
+    const totalCost = document.getElementById("total-cost");
+    cartBody.innerHTML = "";
+    let total = 0;
+
+    cartItems.forEach((item, index) => {
+      const itemTotal = item.cost * item.quantity;
+      total += itemTotal;
+      const imageSrc = imageMap[item.name] || "";
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><img src="${imageSrc}" class="cart-img" alt="${item.name}"><br>${item.name}</td>
+        <td>${item.quantity}</td>
+        <td>₹${item.cost}</td>
+        <td>₹${itemTotal}</td>
+        <td><button onclick="removeFromCart(${index})">Remove</button></td>
+      `;
+      cartBody.appendChild(row);
+    });
+
+    totalCost.innerText = "₹" + total;
+  }
+
+  // Initial load
+  renderProducts();
+</script>
+
+</body>
+</html>

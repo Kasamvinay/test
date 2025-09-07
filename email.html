@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="return validateForm()">
+  <input type="text" id="name" placeholder="Name"><br>
+  <input type="email" id="email" placeholder="Email"><br>
+  <textarea id="message" placeholder="Message"></textarea><br>
+  <button type="submit">Submit</button>
+</form>
+<div id="confirmation"></div>
+<script>
+function validateForm() {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  if (!name || !email || !message) {
+    alert("Please fill all fields.");
+    return false;
+  }
+
+  document.getElementById("confirmation").innerText = "Thank you for contacting us!";
+  return false; // prevent actual form submission
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Cart with Quantity</title>
+  <style>
+    .item {
+      display: inline-block;
+      margin: 20px;
+      text-align: center;
+    }
+    img {
+      width: 150px;
+      height: 150px;
+    }
+    #cart {
+      margin-top: 30px;
+      border-collapse: collapse;
+      width: 90%;
+    }
+    #cart th, #cart td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    .cart-img {
+      width: 60px;
+      height: 60px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Product List</h2>
+
+<div id="product-list">
+  <div class="item">
+    <img src="APPLE.jpeg" alt="Apple">
+  </div>
+
+  <div class="item">
+    <img src="banana.jpeg" alt="Banana">
+  </div>
+
+  <div class="item">
+    <img src="mango.jpeg" alt="Mango">
+  </div>
+</div>
+
+<h2>Cart</h2>
+<table id="cart">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>Cost (Each)</th>
+      <th>Total</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="cart-body"> </tbody> <!--The body (#cart-body) will be filled dynamically with JS.-->
+  <tfoot>
+    <tr>
+      <td colspan="3"><strong>Total Amount</strong></td>
+      <td colspan="2" id="total-cost">₹0</td> <!--Footer (#total-cost) shows total cart amount.-->
+    </tr>
+  </tfoot>
+</table>
+
+<script>
+  
+//   Creates a JavaScript array with 3 objects.
+
+// Each object represents a product with name and cost
+//const x = [{},{},{}]
+  const products = [
+    { name: "Apple", cost: 50 }, //products[0] = { name: "Apple", cost: 50 }
+    { name: "Banana", cost: 20 },
+    { name: "Mango", cost: 70 }
+  ];
+
+  console.log(products);
+//Maps names to image filenames.
+  const imageMap = {
+    "Apple": "APPLE.jpeg",
+    "Banana": "banana.jpeg",
+    "Mango": "mango.jpeg"
+  };
+
+  //Will store selected cart items.
+
+  const cartItems = []; // undefined
+
+
+  // Dynamically Add Product Info & Button
+
+  //Finds the HTML element: <div id="product-list">...</div>
+  const productList = document.getElementById("product-list");
+
+  //Selects all child elements inside #product-list that have class .item.
+   const productDivs = productList.querySelectorAll(".item");
+  //productDivs = [div.item (Apple), div.item (Banana), div.item (Mango)];
+
+
+// Loops through the products[] array.
+
+// product = current object (Apple, then Banana, then Mango)
+
+// index = 0, 1, 2 accordingly.
+
+  products.forEach((product, index) => {
+
+    //const div = productDivs[0];
+    const div = productDivs[index];
+
+
+    //Creates a new empty <div> (not yet attached to the DOM).
+    const info = document.createElement("div");
+
+    
+    info.innerHTML = `
+      <p><strong>${product.name}</strong></p>
+      <p>Cost: ₹${product.cost}</p>
+      <button onclick="addToCart(${index})">Add to Cart</button>
+    `;
+
+
+//     info.innerHTML = `
+//   <p><strong>Apple</strong></p>
+//   <p>Cost: ₹50</p>
+//   <button onclick="addToCart(0)">Add to Cart</button>
+// `;
+    
+
+
+div.appendChild(info);
+// <div class="item">
+//   <img src="APPLE.jpeg">
+//   <div>
+//     <p><strong>Apple</strong></p>
+//     <p>Cost: ₹50</p>
+//     <button onclick="addToCart(0)">Add to Cart</button>
+//   </div>
+// </div>
+
+
+
+  });
+
+
+
+
+  function addToCart(index) {
+    //Gets the product data from the products array using its index.
+    //index = 0 ➝ product = { name: "Apple", cost: 50 }
+    const product = products[index];
+
+  // Example (first time):
+
+  // cartItems = []
+  // existingItem = undefined
+
+
+  //Example (after adding Apple once):
+
+  //cartItems = [ { name: "Apple", cost: 50, quantity: 1 } ]
+  //existingItem = { name: "Apple", cost: 50, quantity: 1 }
+
+    const existingItem = cartItems.find(item => item.name === product.name);
+
+    if (existingItem) {
+      //Before: { name: "Apple", quantity: 1 }
+      existingItem.quantity += 1;
+      // After:  { name: "Apple", quantity: 2 }
+    } else {
+      //Add a new object into the cartItems array with quantity 1.
+      cartItems.push({ name: product.name, cost: product.cost, quantity: 1 });
+      //cartItems.push({ name: "Banana",   cost: 20,           quantity: 1 });
+    }
+
+    renderCart(); //Finally, call renderCart() to update the cart on the screen.
+  }
+
+  
+
+  // ✅ UPDATED: Remove only 1 quantity at a time
+  function removeFromCart(index) {
+    if (cartItems[index].quantity > 1) {
+      cartItems[index].quantity -= 1;
+    } else {
+      cartItems.splice(index, 1);
+    }
+    renderCart();
+  }
+
+//Called whenever the cart changes — adds, removes, or updates items.
+
+ function renderCart() {
+    const cartBody = document.getElementById("cart-body");
+    const totalCost = document.getElementById("total-cost");
+
+    //Clears the old cart contents so we can re-render it fresh.
+    cartBody.innerHTML = "";
+    // Initialize total cost to 0 before adding up item totals.
+    let total = 0;
+
+    cartItems.forEach((item, index) => {
+      const itemTotal = item.cost * item.quantity;
+      total += itemTotal;
+
+      //imageMap["Apple"] = "APPLE.jpeg"
+      //imageSrc = "APPLE.jpeg"
+      const imageSrc = imageMap[item.name] || "";
+
+      const row = document.createElement("tr");
+     
+      row.innerHTML = `
+        <td><img src="${imageSrc}" class="cart-img" alt="${item.name}"><br>${item.name}</td>
+        <td>${item.quantity}</td>
+        <td>₹${item.cost}</td>
+        <td>₹${itemTotal}</td>
+        <td><button onclick="removeFromCart(${index})">Remove</button></td>
+      `;
+        //Adds the new row to the cart table <tbody>.
+      cartBody.appendChild(row);
+      
+    });
+
+    totalCost.innerText = "₹" + total;
+  }
+  
+</script>
+
+</body>
+</html>

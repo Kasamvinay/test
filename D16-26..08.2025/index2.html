@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JSON without fetch</title>
+</head>
+<body>
+  <h2>Student Information</h2>
+  <div id="output"></div>
+
+  <!-- Embedded JSON data inside script tag -->
+  <script id="myData" type="application/json">
+    {
+      "name": "John",
+      "age": 25,
+      "course": "JavaScript",
+      "skills": ["HTML", "CSS", "JavaScript"]
+    }
+  </script>
+
+  <!-- Script to read and display JSON data -->
+  <script>
+    // Get JSON text from <script> tag and parse it
+    //JSON.parse(...) takes a JSON string and converts it into a JavaScript object.
+    //.textContent:This gets the raw text content inside the <script> tag.
+   //In this case, it returns the JSON string:
+   
+    const jsonData = JSON.parse(document.getElementById("myData").textContent);
+
+    // Prepare output HTML
+    const outputDiv = document.getElementById("output");
+    outputDiv.innerHTML = `
+      <p><strong>Name:</strong> ${jsonData.name}</p>
+      <p><strong>Age:</strong> ${jsonData.age}</p>
+      <p><strong>Course:</strong> ${jsonData.course}</p>
+      <p><strong>Skills:</strong> ${jsonData.skills.join(", ")}</p>
+    `;
+  </script>
+</body>
+</html>

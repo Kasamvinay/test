@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Toggle Video Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #myVideo {
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h2>Show / Hide Video Example</h2>
+
+  <video id="myVideo" width="320" controls style="display: none;">
+    <source src="sample.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <br><br>
+  <button onclick="toggleMedia()">Show/Hide Video</button>
+
+  <script>
+    function toggleMedia() {
+      const video = document.getElementById("myVideo");
+      video.style.display = video.style.display === "none" ? "block" : "none";
+    }
+  </script>
+</body>
+</html>
+
+
+<!-- function togglemedia()
+{
+  const video=document.getElementById("myVideo");
+  video.style.display=(video.style.display === "none" )? "block" :"none";
+
+} -->

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // const d1=new Date("2025-01-01");
+        // const d2=new Date("2025-01-31");
+        // function daysBetween(d1,d2)
+        // {
+        //     const d11=d1.getDate();
+        //     const d22=d2.getDate();
+        //     console.log(d22-d11);
+        // }
+        // daysBetween(d1,d2);
+
+        // const d=new Date();
+        // function getCurrentTime(d){
+        //     const hours=d.getHours();
+        //     const minutes=d.getMinutes();
+        //     const seconds=d.getSeconds();
+        //     return `${hours}:${minutes}:${seconds}`;
+        // }
+        // console.log(getCurrentTime(d));
+
+        
+        // function addDays(date, days)
+        // {
+        //     const result = new Date(date);
+        //     result.setDate(result.getDate() + days);
+        //     return result;
+        // }
+        // const originalDate = new Date();
+        // const newDate = addDays(originalDate, 10);
+        // console.log(newDate.toDateString());
+
+
+        // function isPast(date)
+        // {
+        //     const today=new Date();
+        //     if(today>date)
+        // {
+        //     return true;
+        // }
+        // else{
+        //     return false;
+        // }
+        // }
+        // const date=new Date("2025-06-27");
+        // console.log(isPast(date));
+
+        // const d1="2025-01-01";
+        // const d2=d1.replace(/-/g,"/");
+        // console.log(d2);
+
+        const d1=new Date("2025-01-01");
+        console.log(d1.toDateString());
+        const getDayName=d1.getDay();
+        const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+        console.log(days[getDayName]);
+        
+
+        
+
+
+    </script>
+</body>
+</html>
