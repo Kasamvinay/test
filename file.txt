@@ -420,3 +420,31 @@ Paste in browser → Your website appears 🎉
 ->Stopping 
 sudo docker ps -> gives container id 
 sudo docker stop <container id>
+
+
+
+
+
+
+//WEBHOOKS
+
+in cmd type:
+ngrok.exe http 8080
+
+take the forwarding url from it
+
+1)Create the Jenkins job ->in the source code management select the git and enter git repo url and make sure the branch is same (*/main)
+
+2)In the triggers section select “Github hook trigger for GITScm polling”
+
+3)click on apply and save
+
+4)open the git hub repo open setting of repo and then go to webhooks
+
+5)Click on add a webhook and take the forwarding URL from ngrok and paste in payload URL and add /github-webhook/ along with the forwarding url
+Forwarding URL: https://corkier-darla-handsome.ngrok-free.dev
+Payload url: https://corkier-darla-handsome.ngrok-free.dev/github-webhook/
+
+6) make changes in the files in github
+7)click on commit changes
+automatically it will build itself
