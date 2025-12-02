@@ -448,3 +448,65 @@ Payload url: https://corkier-darla-handsome.ngrok-free.dev/github-webhook/
 6) make changes in the files in github
 7)click on commit changes
 automatically it will build itself
+
+
+
+
+
+
+//email notification
+open : https://myaccount.google.com/apppasswords =>generate password
+
+✅ Part 1 — Configure Email Notification in a Job
+Create a new job → choose Freestyle project
+Name the job
+Scroll to Post-build actions
+Enable Email Notification
+Add Recipient email (example: chandala.ruthwik@gmail.com)
+Save the job and build it
+
+✅ Part 2 — Global SMTP Configuration (Email Notification Heading)
+Manage Jenkins → System → Email Notification
+Open Manage Jenkins
+Open System
+Scroll to Email Notification section
+Fill these:
+SMTP Server:
+smtp.gmail.com
+Advanced:
+Username: your Gmail
+Password: 16-digit generated app password
+Use SSL: enabled
+SMTP Port:465
+Reply-To Address: your Gmail
+Test:
+Enter any valid recipient email
+Click Test configuration
+
+✅ Part 3 — Extended Email Notification Section
+Fill these:
+SMTP Server:smtp.gmail.com
+SMTP Port:465
+Use SSL: enabled
+Credentials:
+Add your Gmail + App Password (16-digit)
+Defaults:
+Default content type: text / html / leave default
+Default recipients: leave empty or add emails
+=>Triggers you can enable:
+Always
+Failure – Any
+Failure – X
+Status changed
+Success
+Test improvement
+Test regression
+Unstable (test failure)
+Failure → Success
+
+
+
+
+
+
+
